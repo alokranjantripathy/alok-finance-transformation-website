@@ -11,3 +11,4 @@ Career Objective
 To contribute to global finance transformation initiatives through process excellence, automation, analytics, and strong accounting controls.
 Connect
 - Email: alokranjantripathy89@gmail.com- GitHub: https://github.com/alokranjantripathy- Website: https://alokranjantripathy.alokranjantripathy89.workers.dev/
+Deployment update: Triggering the first Cloudflare build for the Finance Transformation Lab website.
