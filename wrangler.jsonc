@@ -1,1 +1,9 @@
-{  "name": "alokranjantripathy",  "compatibility_date": "2026-10-11",  "assets": {    "directory": "./",    "not_found_handling": "404-page"  }}
+
+{
+  "name": "alokranjantripathy",
+  "compatibility_date": "2026-10-11",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "404-page"
+  }
+}
