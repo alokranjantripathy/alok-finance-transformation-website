@@ -264,68 +264,8 @@
 @media(max-width:960px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.gallery-grid{grid-template-columns:1fr}.photo-open{height:250px}}
 </style>
-<!-- Unified Finance Assistant: one visible launcher, one working panel. -->
-<button aria-controls="chat-window" aria-expanded="false" class="chat-launch" id="chat-launch" type="button">💬 Finance Assistant</button>
-<aside aria-label="Guided contact assistant" class="chat-window" id="chat-window">
-<div class="chat-head"><div><strong>Finance Assistant</strong><small>Guided portfolio and enquiry help</small></div><button aria-label="Close assistant" class="chat-close" id="chat-close" type="button">Close</button></div>
-<div class="chat-body">
-<div class="chat-message" id="chat-message">Hello! I can help you explore Alok's finance expertise, projects, services, and contact options. What would you like to discuss?</div>
-<div class="chat-options" id="chat-options">
-<button data-type="Career opportunity" type="button">💼 Career opportunities</button>
-<button data-type="Finance transformation / automation" type="button">⚙️ Finance Transformation</button>
-<button data-type="Accounting &amp; bookkeeping services" type="button">📘 Accounting &amp; Bookkeeping</button>
-<button data-type="Finance learning / collaboration" type="button">📈 Finance Learning &amp; Market Analytics</button>
-<button data-type="Other professional enquiry" type="button">✉️ Contact Alok directly</button>
-</div>
-<form class="chat-form" id="chat-form">
-<label>Your name<input autocomplete="name" maxlength="100" name="name" required=""/></label>
-<label>Your email<input autocomplete="email" maxlength="160" name="email" required="" type="email"/></label>
-<label>Company (optional)<input autocomplete="organization" maxlength="120" name="company"/></label>
-<label>Enquiry type<select id="chat-type" name="type" required=""><option>Career opportunity</option><option>Finance transformation / automation</option><option>Accounting &amp; bookkeeping services</option><option>Finance learning / collaboration</option><option>Other professional enquiry</option></select></label>
-<label>Message<textarea maxlength="2500" name="message" placeholder="How can Alok help?" required=""></textarea></label>
-<button class="chat-send" type="submit">Prepare enquiry email →</button>
-<p class="chat-small">This guided assistant prepares an email draft; it does not use a live AI service or send data to a server. Review the draft before sending. Do not enter confidential information.</p>
-</form>
-</div>
-</aside>
-<script>
-(function(){
-  const launch=document.getElementById('chat-launch'), win=document.getElementById('chat-window'), close=document.getElementById('chat-close');
-  const options=document.getElementById('chat-options'), form=document.getElementById('chat-form'), type=document.getElementById('chat-type'), message=document.getElementById('chat-message');
-  function openChat(){win.classList.add('open');launch.setAttribute('aria-expanded','true');}
-  function closeChat(){win.classList.remove('open');launch.setAttribute('aria-expanded','false');}
-  launch.addEventListener('click',()=>win.classList.contains('open')?closeChat():openChat());
-  close.addEventListener('click',closeChat);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape') closeChat();});
-  options.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    type.value=b.dataset.type; options.style.display='none'; form.classList.add('show');
-    message.textContent='You selected: '+b.dataset.type+'. Add your details and prepare an enquiry email.';
-  }));
-  function prepareMail(data, statusNode){
-    const subject='Website enquiry — '+data.type;
-    const body=[
-      'Website enquiry for Alok Ranjan Tripathy','',
-      'Name: '+data.name,'Email: '+data.email,'Company: '+(data.company||'Not provided'),
-      'Enquiry type: '+data.type,'','Message:',data.message
-    ].join('\n');
-    // No public email address is embedded by default. Let the visitor choose their configured mail app and enter the recipient.
-    const url='mailto:alokranjantripathy89@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-    statusNode.textContent='Opening your email application with the enquiry draft. Review the draft and press Send in your email application.';
-    window.location.href=url;
-  }
-  form.addEventListener('submit',e=>{
-    e.preventDefault(); const d=Object.fromEntries(new FormData(form).entries());
-    prepareMail(d,message); message.textContent='Your email draft is ready to be opened. Review the draft and press Send in your email application.';
-  });
-  const mainForm=document.getElementById('contact-form');
-  if(mainForm){
-    mainForm.addEventListener('submit',e=>{
-      e.preventDefault(); const d=Object.fromEntries(new FormData(mainForm).entries());
-      const status=document.getElementById('form-status'); prepareMail(d,status);
-    });
-  }
-})();
-</script>
+<!-- Single Finance Assistant retained below; duplicate assistant removed. -->
+
 <script>
 const galleryPhotos = [
   {"title":"Professional gathering","cat":"Learning & Collaboration","desc":"A professional gathering and shared learning experience."},
@@ -467,6 +407,27 @@ $('lab-run').addEventListener('click',()=>{try{run()}catch(e){status('Reconcilia
 $('lab-export').addEventListener('click',()=>{if(!hasRun||!outputRows.length)return;const data=[['Status','Reference','Bank amount','ERP amount','Review note'],...outputRows.map(r=>[r.status,r.reference,r.bankAmount,r.erpAmount,r.note])].map(row=>row.map(csvCell).join(',')).join('\r\n');const blob=new Blob(['\ufeff'+data],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='brs-reconciliation-results.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
 $('lab-sample').addEventListener('click',()=>{bankRows=[{Reference:'TXN-1001',Amount:'12500'},{Reference:'TXN-1002',Amount:'8200'},{Reference:'TXN-1003',Amount:'4750'},{Reference:'TXN-1004',Amount:'6000'},{Reference:'TXN-1006',Amount:'2200'}];ledgerRows=[{Reference:'TXN-1001',Amount:'12500'},{Reference:'TXN-1002',Amount:'8200'},{Reference:'TXN-1003',Amount:'4750'},{Reference:'TXN-1005',Amount:'3400'},{Reference:'TXN-1006',Amount:'2190'}];fillSelect('lab-bank-ref',bankRows,/^Reference$/i);fillSelect('lab-bank-amt',bankRows,/^Amount$/i);fillSelect('lab-ledger-ref',ledgerRows,/^Reference$/i);fillSelect('lab-ledger-amt',ledgerRows,/^Amount$/i);$('lab-bank-sign').value='signed';$('lab-ledger-sign').value='signed';run();});
 document.querySelectorAll('.lab-subscribe-placeholder').forEach(btn=>btn.addEventListener('click',()=>{$('lab-plan-status').textContent='The '+btn.dataset.plan+' plan is not yet available for purchase. Razorpay account, server-side subscription setup, verified webhooks, membership enforcement and testing are required before checkout can be enabled.'; $('lab-plan-status').scrollIntoView({behavior:'smooth',block:'center'});}));
+})();
+</script>
+
+
+<!-- Finance Assistant: guided, browser-only helper; no external AI service required -->
+<div class="finance-assistant" id="finance-assistant-widget">
+  <div class="finance-chat" id="finance-assistant-chat" role="dialog" aria-label="Finance Assistant" aria-modal="false">
+    <div class="finance-chat-head"><strong>Finance Assistant</strong><button id="fa-close" type="button" aria-label="Close assistant" style="float:right;background:transparent;color:white;border:0;font-size:20px;cursor:pointer">×</button><div style="font-size:12px;opacity:.82;margin-top:4px">Choose a topic to get a practical starting point.</div></div>
+    <div class="finance-chat-body" id="fa-body"><div class="finance-msg">Hello! I can guide you through finance transformation, AP/AR, R2R, process improvement, automation and analytics. This is a guided assistant, not a live AI or accounting advice service.</div><div class="finance-options">
+      <button type="button" data-fa="r2r">Record-to-Report (R2R)</button><button type="button" data-fa="ap">Accounts Payable / P2P</button><button type="button" data-fa="ar">Accounts Receivable / O2C</button><button type="button" data-fa="automation">Finance automation</button><button type="button" data-fa="analytics">Finance analytics &amp; dashboards</button><button type="button" data-fa="consulting">Discuss a project / consulting</button>
+    </div></div>
+    <form id="fa-form" style="display:flex;gap:7px;padding:12px;border-top:1px solid rgba(255,255,255,.12)"><input id="fa-question" aria-label="Ask a finance question" placeholder="Type a finance question…" style="min-width:0;flex:1;padding:10px;border-radius:9px;border:1px solid #526174;background:#fff;color:#142337"><button type="submit" style="padding:10px 12px;border-radius:9px;border:0;background:#18b5cf;color:#061523;font-weight:800;cursor:pointer">Ask</button></form>
+  </div>
+  <button class="finance-assistant-button" id="fa-launch" type="button" aria-expanded="false" aria-controls="finance-assistant-chat">Finance Assistant</button>
+</div>
+<script id="finance-assistant-local-script">
+(function(){'use strict';var box=document.getElementById('finance-assistant-chat'),launch=document.getElementById('fa-launch'),close=document.getElementById('fa-close'),body=document.getElementById('fa-body'),form=document.getElementById('fa-form'),input=document.getElementById('fa-question');if(!box||!launch||!body)return;
+var answers={r2r:'R2R improvement starting points: map the close calendar; define owners and cut-off times; standardise reconciliations; track aged open items; document journal controls; and monitor close-cycle time, late journals and reconciliation completion.',ap:'AP / P2P starting points: validate vendor master and tax details; match PO, receipt and invoice; route exceptions by reason; measure invoice cycle time, first-pass match rate, duplicate rate and overdue invoices; keep approvals and audit trails.',ar:'AR / O2C starting points: segment overdue receivables; review disputes and deductions; standardise credit and collection workflows; reconcile cash application; track DSO, overdue ageing, unapplied cash and dispute resolution time.',automation:'Automation starting points: baseline current volumes and effort; identify repetitive rule-based steps; document exceptions and controls; pilot with a small dataset; compare time saved, error rate and exception rate before scaling.',analytics:'Dashboard starting points: define business questions and KPI owners; reconcile source totals; show trends, ageing and exception categories; include refresh date and definitions; validate totals against the source ledger before decisions.',consulting:'For a project discussion, share the process, current pain point, approximate monthly volume, systems used and desired outcome. Use the Contact section to email a short brief.'};
+function add(text){var d=document.createElement('div');d.className='finance-msg';d.textContent=text;body.appendChild(d);body.scrollTop=body.scrollHeight;}
+function reply(key){add(answers[key]||'I can help frame the problem. Describe the process, expected outcome, current system and the main exception or bottleneck. For a formal review, use the Contact section.');}
+launch.addEventListener('click',function(){var open=!box.classList.contains('open');box.classList.toggle('open',open);launch.setAttribute('aria-expanded',String(open));if(open)input.focus();});close.addEventListener('click',function(){box.classList.remove('open');launch.setAttribute('aria-expanded','false');});body.addEventListener('click',function(e){var b=e.target.closest('[data-fa]');if(b)reply(b.getAttribute('data-fa'));});form.addEventListener('submit',function(e){e.preventDefault();var q=(input.value||'').trim();if(!q)return;add('You: '+q);var t=q.toLowerCase(),key=t.includes('payable')||t.includes('invoice')||t.includes('vendor')||t.includes('p2p')?'ap':t.includes('receivable')||t.includes('collection')||t.includes('customer')||t.includes('o2c')?'ar':t.includes('close')||t.includes('reconcil')||t.includes('journal')||t.includes('ledger')||t.includes('r2r')?'r2r':t.includes('automat')||t.includes('robot')||t.includes('workflow')?'automation':t.includes('dashboard')||t.includes('analytics')||t.includes('kpi')?'analytics':'consulting';reply(key);input.value='';});
 })();
 </script>
 
